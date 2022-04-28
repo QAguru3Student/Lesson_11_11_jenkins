@@ -1,4 +1,4 @@
-package one.tests;
+package ant.one.tests;
 
 import org.junit.jupiter.api.Test;
 
@@ -7,9 +7,10 @@ import java.io.File;
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
-public class DemoFillFormTests extends TestBase {
+public class DemoFillFormWithPageObjectsTests extends TestBase {
     String firstName = "Anton";
     String lastName = "Babushkin";
     String email = "ab@mail.ru";
@@ -22,7 +23,7 @@ public class DemoFillFormTests extends TestBase {
     String subjects = "Maths";
     String address = "Moscow, Marinskyi park 35, 122";
     String state = "NCR";
-    String city = "Lucknow";
+    String city = "Agra";
     String filename = "avatar.jpg";
 
 
@@ -36,7 +37,7 @@ public class DemoFillFormTests extends TestBase {
 
     void openPage() {
         //Открыть страницу
-        open("https://demoqa.com/automation-practice-form");
+        registrationsPage.openPage();
     }
 
     void fillForm() {
@@ -61,8 +62,8 @@ public class DemoFillFormTests extends TestBase {
 
         $("#state").parent().click();
         $(byText(state)).click();
-        //$("#city").click();
-        //$(byText(city)).click();
+        // $("#city").click();
+       // $(byText(city)).click();
         $("#submit").click();
     }
 

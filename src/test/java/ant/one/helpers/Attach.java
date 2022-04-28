@@ -1,4 +1,4 @@
-package one.helpers;
+package ant.one.helpers;
 
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Attachment;

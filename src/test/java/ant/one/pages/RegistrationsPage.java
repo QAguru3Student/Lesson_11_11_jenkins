@@ -1,4 +1,4 @@
-package one.pages;
+package ant.one.pages;
 
 import static com.codeborne.selenide.Selenide.open;
 

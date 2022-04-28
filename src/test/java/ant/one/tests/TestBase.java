@@ -1,4 +1,4 @@
-package one.tests;
+package ant.one.tests;
 
 import ant.one.helpers.Attach;
 import ant.one.pages.RegistrationsPage;
