@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static io.qameta.allure.Allure.step;
 
 public class DemoFillFormWithPageObjectsTests extends TestBase {
     String firstName = "Anton";
@@ -28,8 +29,8 @@ public class DemoFillFormWithPageObjectsTests extends TestBase {
     String filename = "avatar.jpg";
 
 
-
     @Test
+    @DisplayName("Заполнение анкеты (with page objects)")
     void openPageTest() {
         openPage();
         fillForm();
@@ -38,50 +39,84 @@ public class DemoFillFormWithPageObjectsTests extends TestBase {
 
     void openPage() {
         //Открыть страницу
-        registrationsPage.openPage();
+        step("Открываем форму регистрации", () -> {
+            registrationsPage.openPage();
+        });
     }
+
     void fillForm() {
         //заполниь форму
-        $("#firstName").setValue(firstName);
-        $("#lastName").setValue(lastName);
-        $("#userEmail").setValue(email);
-        $("#gender-radio-1").parent().click();
-        $("#userNumber").setValue(mobileNumber);
+        step("Ввести имя", () -> {
+            $("#firstName").setValue(firstName);
+        });
+        step("Ввести фамилию", () -> {
+            $("#lastName").setValue(lastName);
+        });
+        step("Ввести email", () -> {
+            $("#userEmail").setValue(email);
+        });
+        step("Выбрать пол", () -> {
+            $("#gender-radio-1").parent().click();
+        });
+        step("Ввести номер телефона", () -> {
+            $("#userNumber").setValue(mobileNumber);
+        });
 
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption(this.year);
-        $(".react-datepicker__month-select").selectOption(this.month);
-        $(".react-datepicker__day--0" + this.day).click();
+        step("Выбрать дату рождения", () -> {
+            $("#dateOfBirthInput").click();
 
-        $("#subjectsInput").setValue(subjects).pressEnter();
-        $("#hobbies-checkbox-1").parent().click();
-        $("#hobbies-checkbox-3").parent().click();
-        $("#uploadPicture").uploadFile(new File("src/test/resources/" + filename));
+            $(".react-datepicker__year-select").selectOption(this.year);
+            $(".react-datepicker__month-select").selectOption(this.month);
+            $(".react-datepicker__day--0" + this.day).click();
+        });
 
-        $("#currentAddress").setValue(address).scrollTo();
+        step("Выбрать предмет", () -> {
+            $("#subjectsInput").setValue(subjects).pressEnter();
+        });
+        step("Выбрать хобби", () -> {
+            $("#hobbies-checkbox-1").parent().click();
+            $("#hobbies-checkbox-3").parent().click();
+        });
+        step("Загрузить аватарку", () -> {
+            $("#uploadPicture").uploadFile(new File("src/test/resources/" + filename));
+        });
 
-        $("#state").parent().click();
-        $(byText(state)).click();
-        // $("#city").click();
-       // $(byText(city)).click();
-        $("#submit").click();
+        step("Ввести адрес", () -> {
+            $("#currentAddress").setValue(address).scrollTo();
+        });
+
+        step("Выбрать штат", () -> {
+            $("#state").parent().click();
+            $(byText(state)).click();
+        });
+
+//        step("Выбрать город", () -> {
+//            $("#city").click();
+//            $(byText(city)).click();
+//        });
+        step("Отправить анкету", () -> {
+            $("#submit").click();
+        });
     }
 
     void checkForm() {
         //проверить форму
-        checkValue("Student Name", this.firstName + " " + this.lastName);
-        checkValue("Student Email", this.email);
-        checkValue("Gender", this.gender);
-        checkValue("Mobile", this.mobileNumber);
-        checkValue("Date of Birth", this.day + " " + this.month + "," + this.year);
-        checkValue("Subjects", this.subjects);
-        checkValue("Hobbies", String.join(", ", this.hobbies));
-        checkValue("Picture", this.filename);
-        checkValue("Address", this.address);
-        //checkValue("State and City", this.state + " " + this.city);
+        step("Проверка отправленной формы", () -> {
+            checkValue("Student Name", this.firstName + " " + this.lastName);
+            checkValue("Student Email", this.email);
+            checkValue("Gender", this.gender);
+            checkValue("Mobile", this.mobileNumber);
+            checkValue("Date of Birth", this.day + " " + this.month + "," + this.year);
+            checkValue("Subjects", this.subjects);
+            checkValue("Hobbies", String.join(", ", this.hobbies));
+            checkValue("Picture", this.filename);
+            checkValue("Address", this.address);
+            //checkValue("State and City", this.state + " " + this.city);
+        });
     }
 
     void checkValue(String key, String value) {
         $$(".table-responsive td").find(text(key)).sibling(0).shouldHave(exactText(value));
     }
 }
+
