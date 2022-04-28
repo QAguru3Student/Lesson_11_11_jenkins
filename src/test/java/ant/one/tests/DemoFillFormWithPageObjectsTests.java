@@ -1,5 +1,6 @@
 package ant.one.tests;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -39,7 +40,6 @@ public class DemoFillFormWithPageObjectsTests extends TestBase {
         //Открыть страницу
         registrationsPage.openPage();
     }
-
     void fillForm() {
         //заполниь форму
         $("#firstName").setValue(firstName);
