@@ -1,7 +1,6 @@
 package ant.one.tests;
 
 import ant.one.helpers.Attach;
-import ant.one.pages.RegistrationsPage;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -13,8 +12,6 @@ import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 
 public class TestBase {
-
-    RegistrationsPage registrationsPage = new RegistrationsPage();
 
     @BeforeAll
     static void config() {
